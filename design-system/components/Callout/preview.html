@@ -1,0 +1,12 @@
+<!-- @dsCard group="Content" height=380 width=900 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Callout — preview</title><style>.pv{padding:24px;display:grid;gap:12px;max-width:720px}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.Callout, { kind: 'note' }, 'Scenes are versioned text files. Old fields migrate when the scene loads.'), h(G.Callout, { kind: 'tip' }, 'Give the CPU authority only over objects that drive gameplay; let the GPU own the rest.'), h(G.Callout, { kind: 'warning' }, 'Multi-GPU and distributed training are out of scope for RustingBrain.'), h(G.Callout, { kind: 'perf', title: '2,191 FPS' }, '10,000 GPU-simulated cubes on an RTX 3060.')));
+</script>
+</body>
+</html>

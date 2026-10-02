@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Scene from '../components/Scene.astro';
+import Button from '../components/Button.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import { u } from '../data/projects';
+---
+<Base title="Page not found">
+  <SiteHeader />
+  <main id="main" class="gr-root gr-404" data-theme="copper">
+    <div class="gr-grid-bg"></div>
+    <Scene kind="forge" focusX={0.74} />
+    <div class="gr-container">
+      <span class="gr-kicker">Error 404</span>
+      <h1>Nothing <b>forged</b> here.</h1>
+      <p class="gr-hero-lede">This page doesn't exist, or it moved when the docs were reorganised.</p>
+      <div class="gr-hero-cta">
+        <Button size="lg" arrow href={u('/')}>Back to the projects</Button>
+        <Button size="lg" variant="secondary" icon="search" data-search>Search the docs</Button>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</Base>

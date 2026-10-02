@@ -1,0 +1,30 @@
+---
+// The welcome screen. Copy is the org's own; change it here, not via props.
+import Scene from './Scene.astro';
+import SiteHeader from './SiteHeader.astro';
+import Button from './Button.astro';
+import ProjectTile from './ProjectTile.astro';
+import { IDS, u } from '../data/projects';
+interface Props { active?: string; still?: boolean }
+const { active, still } = Astro.props;
+---
+<section class="gr-root gr-hero" data-theme="copper">
+  <div class="gr-grid-bg"></div>
+  <Scene kind="forge" still={still} focusX={0.74} focusY={0.37} fill={0.00185} />
+  <div class="gr-hero-shade"></div>
+  <SiteHeader clear active={active} />
+  <div class="gr-container gr-hero-body">
+    <span class="gr-kicker">Rust / GPU / Possibility</span>
+    <h1 class="gr-hero-title">Going<b>Rusting</b></h1>
+    <p class="gr-hero-tagline">Rethinking engines, learning, and graphics.</p>
+    <p class="gr-hero-lede">We explore how Rust and GPU computing can reshape game engines, machine learning, and real-time graphics.</p>
+    <div class="gr-hero-cta">
+      <Button size="lg" arrow href="#projects">Explore the projects</Button>
+      <Button size="lg" variant="secondary" icon="book" href={u('/engine/docs/')}>Read the docs</Button>
+    </div>
+    <div class="gr-hero-motto">BUILD. MEASURE. EXPLORE.</div>
+  </div>
+  <div class="gr-container gr-hero-index" id="projects">
+    {IDS.map((id) => <ProjectTile project={id} still={still} />)}
+  </div>
+</section>

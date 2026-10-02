@@ -1,0 +1,29 @@
+---
+import Logo from './Logo.astro';
+import { GH, u } from '../data/projects';
+const cols: [string, [string, string, string?][]][] = [
+  ['Projects', [['RustingEngine', u('/engine/'), 'copper'], ['RustingBrain', u('/brain/'), 'verdigris'], ['RustingShader', u('/shader/'), 'cobalt']]],
+  ['Learn', [['Engine docs', u('/engine/docs/')], ['Brain tutorials', u('/brain/tutorials/')], ['Releases', GH + 'RustingEngine/releases']]],
+  ['Community', [['Contributing', GH + '.github/blob/main/CONTRIBUTING.md'], ['Support', GH + '.github/blob/main/SUPPORT.md'], ['Code of Conduct', GH + '.github/blob/main/CODE_OF_CONDUCT.md'], ['GitHub', 'https://github.com/GoingRusting']]],
+];
+---
+<footer class="gr-root gr-footer" data-theme="copper" id="community">
+  <div class="gr-container">
+    <div class="gr-footer-top">
+      <div class="gr-footer-brand">
+        <Logo size={30} wordmark />
+        <p>Independent projects exploring how Rust and GPU computing can reshape engines, learning, and graphics.</p>
+      </div>
+      {cols.map(([title, links]) => (
+        <div class="gr-footer-col">
+          <h2 class="gr-footer-h">{title}</h2>
+          {links.map(([label, href, mat]) => <a href={href}>{mat && <i style={`background:var(--${mat})`}></i>}{label}</a>)}
+        </div>
+      ))}
+    </div>
+    <div class="gr-footer-bottom">
+      <span class="gr-footer-motto">BUILD. MEASURE. EXPLORE.</span>
+      <span>Projects evolve independently — check each repository for platform support and license terms.</span>
+    </div>
+  </div>
+</footer>

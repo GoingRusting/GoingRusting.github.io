@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import HomeHero from '../components/HomeHero.astro';
+import ProjectPanel from '../components/ProjectPanel.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+<Base>
+  <HomeHero active="Projects" />
+  <main id="main">
+    <ProjectPanel project="engine" />
+    <ProjectPanel project="brain" align="right" />
+    <ProjectPanel project="shader" />
+  </main>
+  <SiteFooter />
+</Base>

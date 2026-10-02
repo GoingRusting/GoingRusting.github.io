@@ -1,0 +1,12 @@
+<!-- @dsCard group="Brand" height=140 subtitle="The angular G — exact geometry of GoingRusting.svg" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Logo — preview</title><style>.pv{display:flex;align-items:center;gap:48px;padding:32px;flex-wrap:wrap}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.Logo, { size: 72 }), h(G.Logo, { size: 44, wordmark: true }), h(G.Logo, { size: 28, wordmark: true })));
+</script>
+</body>
+</html>

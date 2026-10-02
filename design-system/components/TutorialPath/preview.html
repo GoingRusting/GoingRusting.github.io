@@ -1,0 +1,12 @@
+<!-- @dsCard group="Docs" height=520 width=900 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>TutorialPath — preview</title><style>.pv{padding:24px;max-width:760px}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.TutorialPath, { project: 'engine', steps: [ { title: 'Getting started', summary: 'Install the toolchain and run the test game.', minutes: 10, level: 'Beginner', state: 'done' }, { title: 'Your first scene', summary: 'Create a project with the rusting CLI and open it in the editor.', minutes: 15, level: 'Beginner', state: 'done' }, { title: 'CPU authority vs GPU ownership', summary: 'Decide which bodies drive gameplay and which the GPU simulates.', minutes: 25, level: 'Intermediate', state: 'current' }, { title: 'Joints and ragdolls', summary: 'Hinges, cone twists and reduced-coordinate articulations.', minutes: 30, level: 'Intermediate' }, { title: 'Scenario tests', summary: 'Seeded, tick-based tests that assert on entity state.', minutes: 20, level: 'Advanced' } ] })));
+</script>
+</body>
+</html>

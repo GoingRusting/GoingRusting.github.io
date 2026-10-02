@@ -1,0 +1,12 @@
+<!-- @dsCard group="Content" height=170 width=900 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>StatRow — preview</title><style>.pv{padding:8px 24px 24px;max-width:640px}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.StatRow, { stats: G.PROJECTS.engine.stats, foot: G.PROJECTS.engine.statsFoot })));
+</script>
+</body>
+</html>

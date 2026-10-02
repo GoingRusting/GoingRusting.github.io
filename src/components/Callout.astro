@@ -1,0 +1,10 @@
+---
+import Icon from './Icon.astro';
+const CALLOUT = { note: ['info', 'Note'], tip: ['check', 'Tip'], warning: ['alert', 'Warning'], perf: ['bolt', 'Performance'] } as const;
+interface Props { kind?: keyof typeof CALLOUT; title?: string }
+const { kind = 'note', title } = Astro.props;
+---
+<aside class:list={['gr-callout', `gr-callout-${kind}`]}>
+  <Icon name={CALLOUT[kind][0]} />
+  <div><span class="gr-callout-title">{title ?? CALLOUT[kind][1]}</span><p><slot /></p></div>
+</aside>

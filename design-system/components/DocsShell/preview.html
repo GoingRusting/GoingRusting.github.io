@@ -1,0 +1,27 @@
+<!-- @dsCard group="Docs" height=1240 width=1360 subtitle="Docs layout — themed per project (RustingBrain shown)" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>DocsShell — preview</title><style>.gr-docs{min-height:1240px}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(G.DocsShell, { project: 'brain', version: 'Docs · latest', title: 'Train a transformer language model', crumbs: ['RustingBrain', 'Guides', 'Language models'],
+    meta: h(React.Fragment, null, h(G.Tag, { tone: 'accent' }, 'CUDA'), h(G.Tag, null, '12 min read'), h(G.Tag, { outline: true }, 'Intermediate')),
+    nav: [ { title: 'Start', items: [ { label: 'Installation' }, { label: 'CUDA setup' }, { label: 'Importing models' } ] },
+           { title: 'Guides', items: [ { label: 'Dense networks' }, { label: 'Language models', active: true }, { label: 'Mixture of Experts' }, { label: 'LoRA fine-tuning' }, { label: 'Text-to-image', tag: 'New' } ] },
+           { title: 'Reference', items: [ { label: 'TransformerLm' }, { label: 'Network' }, { label: 'Sampler' }, { label: 'Optimizer' } ] } ],
+    toc: [ { label: 'Overview', active: true }, { label: 'Build the model' }, { label: 'Grouped-query attention', sub: true }, { label: 'Train a step' }, { label: 'Next steps' } ] },
+    h(React.Fragment, null,
+      h('p', null, 'RustingBrain builds decoder-only transformers with a fluent builder. Everything below runs on a single desktop GPU; the same code runs on the CPU backend, just slower.'),
+      h(G.CodeBlock, { lang: 'bash', title: 'terminal', lineNumbers: false, code: '$ cargo add rusting_brain --features cuda' }),
+      h('h2', null, 'Build the model'),
+      h('p', null, 'Set the vocabulary, width and depth, then ', h('code', null, 'heads(8, 2, 64)'), ' for grouped-query attention: eight query heads sharing two key/value heads of size 64.'),
+      h(G.CodeBlock, { lang: 'rust', title: 'examples/lm.rs', highlight: [6, 7], code: 'let mut model = TransformerLm::builder()\n    .vocab_size(32_000)\n    .d_model(512)\n    .n_layers(8)\n    .heads(8, 2, 64)\n    .experts(8, 2)\n    .moe_layers(2..8)\n    .optimizer(Optimizer::adam(3e-4))\n    .seed(42)\n    .build()?;' }),
+      h(G.Callout, { kind: 'tip' }, 'Mixture-of-Experts layers use dropless top-k routing with a load-balancing loss \u2014 no tokens are discarded.'),
+      h('h2', null, 'Train a step'),
+      h('ul', null, h('li', null, 'Batches are vectors of token ids.'), h('li', null, 'Use BF16 mixed precision and gradient accumulation for longer sequences.'), h('li', null, 'Adam state is saved with checkpoints, so training resumes where it stopped.')),
+      h('div', { className: 'gr-docs-pager' }, h('a', { href: '#' }, h('small', null, 'Previous'), h('span', null, 'Dense networks')), h('a', { href: '#' }, h('small', null, 'Next'), h('span', null, 'Sampling & generation'))))));
+</script>
+</body>
+</html>

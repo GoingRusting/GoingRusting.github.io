@@ -1,0 +1,37 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import DocsShell from '../../../components/DocsShell.astro';
+import Tag from '../../../components/Tag.astro';
+import Icon from '../../../components/Icon.astro';
+import { PROJECTS, IDS, type ProjectId } from '../../../data/projects';
+import { pagesOf, groupsOf, hrefOf, slugOf, type Page } from '../../../lib/content';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const project of IDS) {
+    const pages = await pagesOf(project, 'docs');
+    for (const [i, entry] of pages.entries())
+      paths.push({ params: { project, slug: slugOf(entry) }, props: { entry, pages, i } });
+  }
+  return paths;
+}
+const { entry, pages, i } = Astro.props as { entry: Page; pages: Page[]; i: number };
+const project = Astro.params.project as ProjectId;
+const pr = PROJECTS[project];
+const { Content, headings } = await render(entry);
+const link = (p?: Page) => p && { label: p.data.title, href: hrefOf(p) };
+---
+<Base title={`${entry.data.title} — ${pr.name} docs`} description={entry.data.description} theme={pr.theme}>
+  <SiteHeader project={project} active="Docs" />
+  <DocsShell project={project} title={entry.data.title} crumbs={[pr.name, 'Docs', entry.data.group]}
+    groups={groupsOf(pages, entry)} toc={headings.filter((h) => h.depth === 2 || h.depth === 3)}
+    prev={link(pages[i - 1])} next={link(pages[i + 1])}>
+    <Fragment slot="meta">
+      <Tag tone="accent">{entry.data.group}</Tag>
+      <a class="gr-tag gr-tag-outline" href={entry.data.source}>Source on GitHub <Icon name="arrowUpRight" /></a>
+    </Fragment>
+    <Content />
+  </DocsShell>
+</Base>

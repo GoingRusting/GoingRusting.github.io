@@ -1,0 +1,10 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import Icon, { type IconName } from './Icon.astro';
+type Props = HTMLAttributes<'a'> & HTMLAttributes<'button'> & { variant?: 'primary' | 'secondary' | 'ghost'; size?: 'sm' | 'md' | 'lg'; icon?: IconName; arrow?: boolean | 'external' };
+const { variant = 'primary', size = 'md', icon, arrow, class: cls, href, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+<Tag class:list={['gr-btn', `gr-btn-${variant}`, size !== 'md' && `gr-btn-${size}`, cls]} href={href} {...rest}>
+  {icon && <Icon name={icon} />}<slot />{arrow && <Icon name={arrow === 'external' ? 'arrowUpRight' : 'arrowRight'} class="gr-arrow" />}
+</Tag>

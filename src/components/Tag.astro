@@ -1,0 +1,5 @@
+---
+interface Props { tone?: 'neutral' | 'accent' | 'success' | 'warning' | 'danger'; outline?: boolean; dot?: boolean; class?: string }
+const { tone, outline, dot, class: cls } = Astro.props;
+---
+<span class:list={['gr-tag', tone && tone !== 'neutral' && `gr-tag-${tone}`, outline && 'gr-tag-outline', cls]}>{dot && <i class="gr-dot" />}<slot /></span>

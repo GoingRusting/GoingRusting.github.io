@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" data-theme="copper">
+<head><link rel="stylesheet" href="../tokens.css"><link rel="stylesheet" href="../components/bundle.css"><script src="../components/lib/react.production.min.js"></script><script src="../components/lib/react-dom.production.min.js"></script><script src="../components/bundle.js"></script>
+<meta charset="utf-8">
+<title>GoingRusting</title>
+<style>
+  html, body { margin: 0; height: 100%; }
+  body { background: var(--surface-100); color: var(--ink); font-family: var(--font-sans); overflow: hidden; }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; }
+  .band { position: absolute; top: 0; left: 0; width: 960px; height: 112px; }
+  .copper { fill: var(--copper); }
+  .cream { fill: var(--ink); }
+  .verdigris { fill: var(--verdigris); }
+  .cobalt { fill: var(--cobalt); }
+  .tile { fill: var(--copper); }
+  .tile.v { fill: var(--verdigris); }
+  .words { position: absolute; left: var(--space-8); bottom: var(--space-8); max-width: 896px; }
+  .name { margin: 0; font-family: var(--font-display); font-weight: 700; font-size: 64px; line-height: .95; letter-spacing: -.02em; color: var(--ink); }
+  .tag { margin: var(--space-2) 0 0 2px; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<svg class="band" viewBox="0 0 960 112" width="960" height="112" aria-hidden="true">
+<!--
+  blocks      copper bar 560×112 bled off the top-left with a chamfer-xl (40) cut, cream cap 80 wide set into it 24 from its end (the G's top stroke) · verdigris 160×112 · cobalt 192×80 — together ≈27% of 960×288
+  arrangement top-band skeleton (the name is too wide for the 440 zone): the G's top bar unrolled as a strip of unequal bands, the projects' materials following the copper in index order
+  pattern     literal motif — chamfered tiles: 12×12 tiles cut at chamfer-sm, 26 of them, 2 rows at a space-4 pitch under the cobalt block, copper with every third verdigris; chosen because the 45° chamfer is the G's own corner
+  scales      gaps space-4; tile side space-3, pitch space-4; cuts chamfer-xl (bar), chamfer-lg (verdigris, cobalt), chamfer-sm (tiles); radius-0 everywhere
+-->
+<polygon class="copper" points="0,0 560,0 560,112 40,112 0,72"/>
+<rect class="cream" x="456" y="0" width="80" height="112"/>
+<polygon class="verdigris" points="596,0 736,0 736,112 576,112 576,20"/>
+<polygon class="cobalt" points="772,0 960,0 960,80 752,80 752,20"/>
+<g>
+<polygon class="tile" points="758,84 764,84 764,96 752,96 752,90"/>
+<polygon class="tile" points="774,84 780,84 780,96 768,96 768,90"/>
+<polygon class="tile v" points="790,84 796,84 796,96 784,96 784,90"/>
+<polygon class="tile" points="806,84 812,84 812,96 800,96 800,90"/>
+<polygon class="tile" points="822,84 828,84 828,96 816,96 816,90"/>
+<polygon class="tile v" points="838,84 844,84 844,96 832,96 832,90"/>
+<polygon class="tile" points="854,84 860,84 860,96 848,96 848,90"/>
+<polygon class="tile" points="870,84 876,84 876,96 864,96 864,90"/>
+<polygon class="tile v" points="886,84 892,84 892,96 880,96 880,90"/>
+<polygon class="tile" points="902,84 908,84 908,96 896,96 896,90"/>
+<polygon class="tile" points="918,84 924,84 924,96 912,96 912,90"/>
+<polygon class="tile v" points="934,84 940,84 940,96 928,96 928,90"/>
+<polygon class="tile" points="950,84 956,84 956,96 944,96 944,90"/>
+<polygon class="tile" points="758,100 764,100 764,112 752,112 752,106"/>
+<polygon class="tile v" points="774,100 780,100 780,112 768,112 768,106"/>
+<polygon class="tile" points="790,100 796,100 796,112 784,112 784,106"/>
+<polygon class="tile" points="806,100 812,100 812,112 800,112 800,106"/>
+<polygon class="tile v" points="822,100 828,100 828,112 816,112 816,106"/>
+<polygon class="tile" points="838,100 844,100 844,112 832,112 832,106"/>
+<polygon class="tile" points="854,100 860,100 860,112 848,112 848,106"/>
+<polygon class="tile v" points="870,100 876,100 876,112 864,112 864,106"/>
+<polygon class="tile" points="886,100 892,100 892,112 880,112 880,106"/>
+<polygon class="tile" points="902,100 908,100 908,112 896,112 896,106"/>
+<polygon class="tile v" points="918,100 924,100 924,112 912,112 912,106"/>
+<polygon class="tile" points="934,100 940,100 940,112 928,112 928,106"/>
+<polygon class="tile" points="950,100 956,100 956,112 944,112 944,106"/>
+</g>
+</svg>
+<div class="words">
+  <h1 class="name">GoingRusting</h1>
+  <p class="tag">Rethinking engines, learning, and graphics.</p>
+</div>
+</div>
+</body>
+</html>

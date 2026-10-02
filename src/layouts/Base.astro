@@ -1,0 +1,83 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+import { u } from '../data/projects';
+interface Props { title?: string; description?: string; theme?: string }
+const { title, description = 'Independent projects exploring how Rust and GPU computing can reshape engines, learning, and graphics.', theme = 'copper' } = Astro.props;
+const full = title ? `${title} · GoingRusting` : 'GoingRusting — Rust / GPU / Possibility';
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const og = new URL(u('/og.png'), Astro.site);
+---
+<!doctype html>
+<html lang="en" data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={u('/favicon.svg')} />
+    <meta name="theme-color" content="#16191d" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="GoingRusting" />
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="360" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={og} />
+  </head>
+  <body class="gr-root">
+    <a class="gr-skip" href="#main">Skip to content</a>
+    <slot />
+    <dialog class="gr-search-dialog gr-root" id="gr-search" aria-label="Search the docs">
+      <button class="gr-btn gr-btn-ghost gr-search-close" type="button" aria-label="Close search" data-close><Icon name="close" /></button>
+      <div id="gr-search-ui"></div>
+    </dialog>
+    <script>
+      // Search: Pagefind UI, loaded the first time the dialog opens (the index exists only after `npm run build`).
+      const dialog = document.getElementById('gr-search') as HTMLDialogElement;
+      const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+      let loaded: Promise<void> | undefined;
+      const load = () => loaded ??= new Promise<void>((done, fail) => {
+        const css = Object.assign(document.createElement('link'), { rel: 'stylesheet', href: `${base}pagefind/pagefind-ui.css` });
+        const js = Object.assign(document.createElement('script'), { src: `${base}pagefind/pagefind-ui.js` });
+        js.onload = () => { new (window as any).PagefindUI({ element: '#gr-search-ui', showSubResults: true, showImages: false, baseUrl: base }); done(); };
+        js.onerror = () => { document.getElementById('gr-search-ui')!.textContent = 'Search is available on the built site.'; fail(); };
+        document.head.append(css, js);
+      });
+      const open = async () => {
+        document.querySelectorAll<HTMLElement>(':popover-open').forEach((p) => p.hidePopover());
+        dialog.showModal();
+        await load().catch(() => {});
+        dialog.querySelector<HTMLInputElement>('input')?.focus();
+      };
+      document.addEventListener('click', (e) => {
+        const t = e.target as Element;
+        if (t.closest('[data-search]')) open();
+        else if (t.closest('[data-close]') || t === dialog) dialog.close();
+      });
+      document.addEventListener('keydown', (e) => {
+        const typing = (e.target as Element).closest('input, textarea, select, [contenteditable]');
+        if ((e.key === 'k' && (e.ctrlKey || e.metaKey)) || (e.key === '/' && !typing)) {
+          e.preventDefault();
+          if (!dialog.open) open();
+        }
+      });
+
+      // Copy buttons on code cards (also those rendered from markdown).
+      document.addEventListener('click', async (e) => {
+        const btn = (e.target as Element).closest<HTMLButtonElement>('.gr-code-copy');
+        if (!btn) return;
+        const code = btn.closest('.gr-code')!.querySelector('pre')!.innerText.replace(/^\$ /gm, '');
+        await navigator.clipboard.writeText(code);
+        btn.classList.add('is-copied');
+        btn.setAttribute('aria-label', 'Copied');
+        setTimeout(() => { btn.classList.remove('is-copied'); btn.setAttribute('aria-label', 'Copy code'); }, 1600);
+      });
+    </script>
+  </body>
+</html>

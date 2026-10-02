@@ -1,0 +1,13 @@
+---
+// A live 3D background. Fills its positioned parent; see scene.ts.
+import type { SceneKind, SceneOptions } from './scene';
+type Props = SceneOptions & { kind?: SceneKind; theme?: string; class?: string };
+const { kind = 'forge', theme, class: cls, ...opt } = Astro.props;
+---
+<div class:list={['gr-scene', cls]} aria-hidden="true" data-theme={theme} data-kind={kind} data-opt={JSON.stringify(opt)}><canvas></canvas></div>
+<script>
+  import { startScene, type SceneKind } from './scene';
+  for (const el of document.querySelectorAll<HTMLElement>('.gr-scene')) {
+    startScene(el.querySelector('canvas')!, el.dataset.kind as SceneKind, JSON.parse(el.dataset.opt || '{}'));
+  }
+</script>

@@ -1,0 +1,74 @@
+---
+// Docs and tutorials frame: sidebar, scene banner with breadcrumbs, prose, optional TOC and pager.
+import Scene from './Scene.astro';
+import Icon from './Icon.astro';
+import { PROJECTS, IDS, u, type ProjectId } from '../data/projects';
+interface Link { label: string; href: string; active?: boolean }
+interface Props {
+  project: ProjectId; title: string; crumbs: string[];
+  groups: { title: string; links: Link[] }[];
+  toc?: { depth: number; slug: string; text: string }[];
+  prev?: { label: string; href: string }; next?: { label: string; href: string };
+}
+const { project, title, crumbs, groups, toc = [], prev, next } = Astro.props;
+const pr = PROJECTS[project];
+const hasToc = toc.length > 1;
+---
+<div class:list={['gr-root gr-docs', !hasToc && 'no-toc']} data-theme={pr.theme}>
+  <aside class="gr-docs-side" aria-label={`${pr.name} navigation`}>
+    <button class="gr-docs-switch" type="button" popovertarget="gr-switch" aria-label={`${pr.name}, switch project`}>
+      <i></i><span><b>{pr.name}</b><small>Docs · latest</small></span><Icon name="chevronDown" />
+    </button>
+    <nav id="gr-switch" class="gr-menu gr-root" popover aria-label="Projects">
+      {IDS.map((id) => <a href={u(`/${id}/docs/`)} data-theme={PROJECTS[id].theme} aria-current={id === project ? 'page' : undefined}><i></i>{PROJECTS[id].name}</a>)}
+    </nav>
+    <button class="gr-search" type="button" data-search><Icon name="search" /><span>Search {pr.stem} docs</span><kbd class="gr-kbd">/</kbd></button>
+    <nav aria-label="Sections">
+      {groups.map((g) => (
+        <div class="gr-docs-group">
+          <h2 class="gr-docs-group-h">{g.title}</h2>
+          {g.links.map((l) => <a class:list={['gr-docs-link', l.active && 'is-active']} href={l.href} aria-current={l.active ? 'page' : undefined}>{l.label}</a>)}
+        </div>
+      ))}
+    </nav>
+  </aside>
+  <main class="gr-docs-main" id="main">
+    <div class="gr-docs-banner">
+      <Scene kind={pr.scene} density={0.6} focusX={0.8} interactive={false} />
+      <div class="gr-docs-head">
+        <nav class="gr-crumbs" aria-label="Breadcrumb">
+          {crumbs.map((c, i) => <>{i > 0 && <Icon name="chevronRight" />}<span>{c}</span></>)}
+        </nav>
+        <h1 class="gr-docs-title">{title}</h1>
+        <div class="gr-docs-meta"><slot name="meta" /></div>
+      </div>
+    </div>
+    <details class="gr-docs-mnav">
+      <summary>{pr.name} pages <Icon name="chevronDown" /></summary>
+      {groups.map((g) => (
+        <div class="gr-docs-group">
+          <h2 class="gr-docs-group-h">{g.title}</h2>
+          {g.links.map((l) => <a class:list={['gr-docs-link', l.active && 'is-active']} href={l.href}>{l.label}</a>)}
+        </div>
+      ))}
+      <button class="gr-search" type="button" data-search><Icon name="search" /><span>Search docs</span></button>
+    </details>
+    <article class="gr-prose" data-pagefind-body data-pagefind-filter={`project:${pr.name}`}>
+      <slot />
+      {(prev || next) && (
+        <nav class="gr-docs-pager" aria-label="Pager" data-pagefind-ignore>
+          {prev ? <a href={prev.href}><small>Previous</small><span>{prev.label}</span></a> : <span></span>}
+          {next && <a href={next.href}><small>Next</small><span>{next.label}</span></a>}
+        </nav>
+      )}
+    </article>
+  </main>
+  {hasToc && (
+    <nav class="gr-docs-toc" aria-label="On this page">
+      <div class="gr-docs-toc-in">
+        <h2 class="gr-docs-group-h">On this page</h2>
+        {toc.map((h) => <a href={`#${h.slug}`} class:list={[h.depth === 3 && 'is-sub']}>{h.text}</a>)}
+      </div>
+    </nav>
+  )}
+</div>

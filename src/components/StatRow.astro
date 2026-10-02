@@ -1,0 +1,13 @@
+---
+interface Props { stats: { value: string; unit?: string; label: string }[]; foot?: string }
+const { stats, foot } = Astro.props;
+---
+<div class="gr-stats" style={`--n:${stats.length}`}>
+  {stats.map((s) => (
+    <div class="gr-stat">
+      <div class="gr-stat-value">{s.value}{s.unit && <small>{s.unit}</small>}</div>
+      <div class="gr-stat-label">{s.label}</div>
+    </div>
+  ))}
+  {foot && <div class="gr-stats-foot">{foot}</div>}
+</div>

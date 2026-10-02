@@ -1,0 +1,12 @@
+<!-- @dsCard group="Pages" page height=3560 width=1360 subtitle="The whole welcome page" -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>HomePage — preview</title></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null, h(G.HomeHero, { active: 'Projects' }), h(G.ProjectPanel, { project: 'engine' }), h(G.ProjectPanel, { project: 'brain', align: 'right' }), h(G.ProjectPanel, { project: 'shader' }), h(G.SiteFooter)));
+</script>
+</body>
+</html>

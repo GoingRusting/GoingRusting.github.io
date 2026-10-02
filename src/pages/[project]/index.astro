@@ -1,0 +1,48 @@
+---
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import ProjectPanel from '../../components/ProjectPanel.astro';
+import TutorialPath from '../../components/TutorialPath.astro';
+import Button from '../../components/Button.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { PROJECTS, IDS, u, type ProjectId } from '../../data/projects';
+import { pagesOf, hrefOf } from '../../lib/content';
+
+export const getStaticPaths = () => IDS.map((project) => ({ params: { project } }));
+const project = Astro.params.project as ProjectId;
+const pr = PROJECTS[project];
+const docs = await pagesOf(project, 'docs');
+const tutorials = await pagesOf(project, 'tutorials');
+---
+<Base title={pr.name} description={pr.short} theme={pr.theme}>
+  <SiteHeader project={project} active="Projects" />
+  <main id="main">
+    <ProjectPanel project={project} heading="h1" />
+    <section class="gr-root gr-section" data-theme={pr.theme}>
+      <div class="gr-container">
+        <span class="gr-kicker">Documentation</span>
+        <h2 class="gr-section-h">Read the docs</h2>
+        <div class="gr-cards">
+          {docs.map((p) => (
+            <a class="gr-card" href={hrefOf(p)}><small>{p.data.group}</small><b>{p.data.title}</b><p>{p.data.description}</p></a>
+          ))}
+        </div>
+      </div>
+    </section>
+    <section class="gr-root gr-section" data-theme={pr.theme}>
+      <div class="gr-container">
+        <span class="gr-kicker">Tutorials</span>
+        <h2 class="gr-section-h">Learn by building</h2>
+        {tutorials.length ? (
+          <>
+            <TutorialPath project={project} progress={false} steps={tutorials.slice(0, 4).map((p) => ({ title: p.data.title, href: hrefOf(p), summary: p.data.description, minutes: p.data.minutes, level: p.data.group }))} />
+            <div class="gr-section-more"><Button variant="secondary" icon="path" arrow href={u(`/${project}/tutorials/`)}>All {tutorials.length} chapters</Button></div>
+          </>
+        ) : (
+          <p class="gr-empty">No tutorials yet. Start with the <a href={u(`/${project}/docs/`)}>{pr.name} docs</a>.</p>
+        )}
+      </div>
+    </section>
+  </main>
+  <SiteFooter />
+</Base>

@@ -1,0 +1,12 @@
+<!-- @dsCard group="Sections" height=260 width=1200 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ProjectTile — preview</title><style>.pv{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:24px}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.ProjectTile, { project: 'engine' }), h(G.ProjectTile, { project: 'brain' }), h(G.ProjectTile, { project: 'shader' })));
+</script>
+</body>
+</html>

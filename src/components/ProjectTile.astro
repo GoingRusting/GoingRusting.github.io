@@ -1,0 +1,15 @@
+---
+import Scene from './Scene.astro';
+import Icon from './Icon.astro';
+import { PROJECTS, type ProjectId } from '../data/projects';
+interface Props { project: ProjectId; href?: string; still?: boolean }
+const { project, href, still } = Astro.props;
+const pr = PROJECTS[project];
+---
+<a class="gr-tile" href={href ?? `#${pr.id}`} data-theme={pr.theme}>
+  <Scene kind={pr.scene} density={0.45} focusX={0.62} still={still} interactive={false} />
+  <div class="gr-tile-top"><span><em>{pr.index}</em> / 03</span><span>{pr.kicker.split(' / ')[0]}</span></div>
+  <div class="gr-tile-name">{pr.name}</div>
+  <p class="gr-tile-desc">{pr.short}</p>
+  <Icon name="arrowUpRight" class="gr-tile-go" />
+</a>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">GoingRusting</title>
+  <desc id="desc">The angular copper G from the GoingRusting banner, with a cream accent and transparent background.</desc>
+  <path d="M220 32H92L36 88V168L92 224H220V128H152" fill="none" stroke="#ef925e" stroke-width="30" stroke-linecap="square" stroke-linejoin="miter"/>
+  <path d="M186 32H220" fill="none" stroke="#f5eee3" stroke-width="30"/>
+</svg>

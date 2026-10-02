@@ -1,0 +1,8 @@
+---
+// Chamfered code card. Highlighting comes from Shiki with the syntax-* token theme.
+import { Code } from 'astro:components';
+import { theme, grCode } from '../lib/shiki.mjs';
+interface Props { code: string; lang?: 'rust' | 'bash' | 'json' | 'glsl'; title?: string; highlight?: number[]; lineNumbers?: boolean; floating?: boolean }
+const { code, lang = 'rust', title = '', highlight = [], lineNumbers, floating } = Astro.props;
+---
+<Code code={code.replace(/\n$/, '')} lang={lang} theme={theme} transformers={[grCode({ title, highlight, lineNumbers, floating })]} />

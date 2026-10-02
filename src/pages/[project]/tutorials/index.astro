@@ -1,0 +1,30 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SiteHeader from '../../../components/SiteHeader.astro';
+import DocsShell from '../../../components/DocsShell.astro';
+import TutorialPath from '../../../components/TutorialPath.astro';
+import Tag from '../../../components/Tag.astro';
+import { PROJECTS, IDS, u, type ProjectId } from '../../../data/projects';
+import { pagesOf, groupsOf, hrefOf } from '../../../lib/content';
+
+export const getStaticPaths = () => IDS.map((project) => ({ params: { project } }));
+const project = Astro.params.project as ProjectId;
+const pr = PROJECTS[project];
+const pages = await pagesOf(project, 'tutorials');
+const minutes = pages.reduce((n, p) => n + (p.data.minutes ?? 0), 0);
+const groups = [{ title: 'Tutorials', links: [{ label: 'All chapters', href: u(`/${project}/tutorials/`), active: true }] }, ...groupsOf(pages)];
+---
+<Base title={`${pr.name} tutorials`} description={`Step-by-step ${pr.name} tutorials, from first build to finished project.`} theme={pr.theme}>
+  <SiteHeader project={project} active="Tutorials" />
+  <DocsShell project={project} title="Tutorials" crumbs={[pr.name, 'Tutorials']} groups={groups}>
+    <Fragment slot="meta">
+      {pages.length > 0 && <Tag tone="accent">{pages.length} chapters</Tag>}
+      {minutes > 0 && <Tag outline>{minutes} min total</Tag>}
+    </Fragment>
+    {pages.length ? (
+      <TutorialPath project={project} progress={false} steps={pages.map((p) => ({ title: p.data.title, href: hrefOf(p), summary: p.data.description, minutes: p.data.minutes, level: p.data.group }))} />
+    ) : (
+      <p>{pr.name} has no tutorials yet. The <a href={u(`/${project}/docs/`)}>docs</a> cover installing and using it.</p>
+    )}
+  </DocsShell>
+</Base>

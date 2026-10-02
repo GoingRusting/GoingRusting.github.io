@@ -1,0 +1,12 @@
+<!-- @dsCard group="Actions" height=150 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Button — preview</title><style>.pv{padding:24px;display:grid;gap:16px}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h('div', { className: 'row' }, h(G.Button, { arrow: true, size: 'lg' }, 'Explore the projects'), h(G.Button, { variant: 'secondary', icon: 'book', size: 'lg' }, 'Read the docs'), h(G.Button, { variant: 'ghost', arrow: 'external' }, 'GitHub')), h('div', { className: 'row', 'data-theme': 'verdigris' }, h(G.Button, { arrow: true }, 'Start tutorial'), h(G.Button, { variant: 'secondary' }, 'Secondary'), h(G.Button, { size: 'sm' }, 'Small')), h('div', { className: 'row', 'data-theme': 'cobalt' }, h(G.Button, { arrow: true }, 'Download pack'), h(G.Button, { variant: 'secondary', icon: 'repo' }, 'Releases'))));
+</script>
+</body>
+</html>

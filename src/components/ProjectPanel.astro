@@ -1,0 +1,36 @@
+---
+import Scene from './Scene.astro';
+import StatRow from './StatRow.astro';
+import Tag from './Tag.astro';
+import Button from './Button.astro';
+import CodeBlock from './CodeBlock.astro';
+import { PROJECTS, u, type ProjectId } from '../data/projects';
+interface Props { project: ProjectId; align?: 'left' | 'right'; code?: boolean; still?: boolean; heading?: 'h1' | 'h2' }
+const { project, align, code = true, still, heading: H = 'h2' } = Astro.props;
+const pr = PROJECTS[project];
+const right = align === 'right';
+---
+<section class:list={['gr-root gr-panel', right && 'is-right']} data-theme={pr.theme} id={pr.id}>
+  <Scene kind={pr.scene} still={still} focusX={right ? 0.3 : 0.7} />
+  <div class="gr-panel-shade"></div>
+  <div class="gr-container gr-panel-inner">
+    <div class="gr-panel-copy">
+      <div class="gr-panel-index"><b>{pr.index}</b> / 03</div>
+      <span class="gr-kicker">{pr.kicker}</span>
+      <H class="gr-panel-name">{pr.name.split(pr.stem)[0]}<b>{pr.stem}</b></H>
+      <p class="gr-panel-lede">{pr.lede}</p>
+      <StatRow stats={pr.stats} foot={pr.statsFoot} />
+      <div class="gr-panel-tags">{pr.tags.map((t) => <Tag tone="accent">{t}</Tag>)}</div>
+      <div class="gr-panel-cta">
+        <Button arrow href={u(`/${pr.id}/docs/`)}>Read the docs</Button>
+        <Button variant="secondary" icon="path" href={u(`/${pr.id}/tutorials/`)}>Tutorials</Button>
+        <Button variant="ghost" arrow="external" href={pr.repo}>GitHub</Button>
+      </div>
+    </div>
+    {code && (
+      <div class="gr-panel-code">
+        <CodeBlock floating lang={pr.code.lang} title={pr.code.title} code={pr.code.text} highlight={pr.code.hl} />
+      </div>
+    )}
+  </div>
+</section>

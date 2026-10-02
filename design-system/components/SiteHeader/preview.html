@@ -1,0 +1,12 @@
+<!-- @dsCard group="Navigation" height=170 width=1200 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>SiteHeader — preview</title><style>.pv{display:grid;gap:24px;padding:16px 0}</style></head>
+<body>
+<div id="root" class="gr-root"></div>
+<script>
+  var G = window.GoingRusting, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h('div', { className: 'pv' }, h(G.SiteHeader, { active: 'Projects' }), h(G.SiteHeader, { active: 'Docs', project: 'brain' })));
+</script>
+</body>
+</html>

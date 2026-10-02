@@ -1,0 +1,34 @@
+---
+// The global bar. Under 900px it collapses to logo + a menu (native popover, no JS).
+import Logo from './Logo.astro';
+import Icon from './Icon.astro';
+import { PROJECTS, IDS, u, type ProjectId } from '../data/projects';
+interface Props { active?: string; project?: ProjectId; clear?: boolean }
+const { active, project, clear } = Astro.props;
+const pr = project && PROJECTS[project];
+const items: [string, string][] = [
+  ['Projects', u('/#projects')],
+  ['Docs', u(`/${project ?? 'engine'}/docs/`)],
+  ['Tutorials', u(`/${project ?? 'brain'}/tutorials/`)],
+  ['Community', u('/#community')],
+];
+---
+<header class:list={['gr-header', clear && 'is-clear']} data-theme={pr?.theme}>
+  <Logo size={28} wordmark href={u('/')} />
+  {pr && <a class="gr-header-project" href={u(`/${pr.id}/`)}><i></i>{pr.name}</a>}
+  <nav class="gr-header-nav" aria-label="Main">
+    {items.map(([label, href]) => <a href={href} class:list={['gr-header-link', active === label && 'is-active']} aria-current={active === label ? 'page' : undefined}>{label}</a>)}
+  </nav>
+  <button class="gr-search" type="button" aria-label="Search documentation" data-search>
+    <Icon name="search" /><span>Search docs</span><kbd class="gr-kbd">Ctrl K</kbd>
+  </button>
+  <a class="gr-btn gr-btn-ghost gr-header-gh" href="https://github.com/GoingRusting">GitHub<Icon name="arrowUpRight" /></a>
+  <button class="gr-btn gr-btn-ghost gr-header-menu" type="button" aria-label="Open menu" popovertarget="gr-menu"><Icon name="menu" /></button>
+  <nav id="gr-menu" class="gr-menu gr-root" popover aria-label="Menu">
+    {items.map(([label, href]) => <a href={href} aria-current={active === label ? 'page' : undefined}>{label}</a>)}
+    <h6>Docs</h6>
+    {IDS.map((id) => <a href={u(`/${id}/docs/`)} data-theme={PROJECTS[id].theme}><i></i>{PROJECTS[id].name}</a>)}
+    <button class="gr-search" type="button" data-search><Icon name="search" /><span>Search docs</span></button>
+    <a href="https://github.com/GoingRusting">GitHub <Icon name="arrowUpRight" /></a>
+  </nav>
+</header>

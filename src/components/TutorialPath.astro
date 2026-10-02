@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import Tag from './Tag.astro';
+import Button from './Button.astro';
+import { PROJECTS, type ProjectId } from '../data/projects';
+export interface TutorialStep { title: string; href?: string; summary?: string; minutes?: number; level?: string; state?: 'done' | 'current' | 'todo' }
+interface Props { project?: ProjectId; steps: TutorialStep[]; progress?: boolean }
+const { project, steps, progress = true } = Astro.props;
+const done = steps.filter((s) => s.state === 'done').length;
+---
+<div class="gr-root" data-theme={project && PROJECTS[project].theme}>
+  {progress && (
+    <div class="gr-path-progress">
+      <span>{done} / {steps.length} chapters</span>
+      <div class="gr-path-bar"><i style={`width:${steps.length ? (done / steps.length) * 100 : 0}%`}></i></div>
+    </div>
+  )}
+  <ol class="gr-path">
+    {steps.map((s, i) => {
+      const state = s.state ?? 'todo';
+      return (
+        <li class:list={['gr-path-step', `is-${state}`]}>
+          <span class="gr-path-mark">{state === 'done' ? <Icon name="check" strokeWidth={2.25} /> : String(i + 1).padStart(2, '0')}</span>
+          <div class="gr-path-body">
+            <h3>{s.href ? <a href={s.href}>{s.title}</a> : s.title}</h3>
+            {s.summary && <p>{s.summary}</p>}
+            <div class="gr-path-meta">
+              {s.minutes && <Tag>{s.minutes} min</Tag>}
+              {s.level && <Tag outline>{s.level}</Tag>}
+            </div>
+          </div>
+          {state === 'current' && <Button size="sm" arrow href={s.href}>Continue</Button>}
+        </li>
+      );
+    })}
+  </ol>
+</div>
